@@ -1,0 +1,25 @@
+{
+  "version": "0.2.32",
+  "assets": {
+    "darwin-amd64": {
+      "url": "https://github.com/merchantlabs/afk-releases/releases/download/v0.2.32/afk-darwin-amd64.gz",
+      "sha256": "114854c7cb62a9ae97066383dae6f9444a43e461d2f5935bd13575d5c76d2b94"
+    },
+    "darwin-arm64": {
+      "url": "https://github.com/merchantlabs/afk-releases/releases/download/v0.2.32/afk-darwin-arm64.gz",
+      "sha256": "6fa98f2741b51937d5aaca50d6191db7db31ea1b72557541ab667db0e1c91cde"
+    },
+    "linux-amd64": {
+      "url": "https://github.com/merchantlabs/afk-releases/releases/download/v0.2.32/afk-linux-amd64.gz",
+      "sha256": "547a5dc8a3dbe3ebf192be4d402c4776ca51a36eb1fc12834a7c2379bac5a227"
+    },
+    "linux-arm64": {
+      "url": "https://github.com/merchantlabs/afk-releases/releases/download/v0.2.32/afk-linux-arm64.gz",
+      "sha256": "61fa3621257883589da0f39eb62916f3e8b2ad763177dec2c0dd5ba398bbd8c9"
+    },
+    "windows-amd64": {
+      "url": "https://github.com/merchantlabs/afk-releases/releases/download/v0.2.32/afk-windows-amd64.exe.gz",
+      "sha256": "2173ff4a7a575a1be5b8c36d48ece8caec99892ad556ece344eb516b53a333bc"
+    }
+  }
+}
