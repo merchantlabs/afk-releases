@@ -35,13 +35,17 @@ trap 'rm -rf "$WORK"' EXIT
 echo "afk: fetching $BASE_URL/latest.json"
 curl -fsSL "$BASE_URL/latest.json" -o "$WORK/latest.json"
 
-VERSION="$(sed -n 's/.*"version": *"\([^"]*\)".*/\1/p' "$WORK/latest.json" | head -1)"
-[ -n "$VERSION" ] || { echo "install.sh: could not read a version from latest.json" >&2; exit 1; }
-
 # latest.json is small and flat (afk always writes it, in scripts/release.sh),
 # so grep/sed read it without needing jq -- not every machine curl runs on has
-# jq installed.
-URL="$(sed -n "s/.*\"$KEY\": *{\"url\": *\"\\([^\"]*\\)\".*/\\1/p" "$WORK/latest.json")"
+# jq installed. But release.sh pretty-prints it, so a key and its "url" can
+# land on separate lines; flatten to one line first. Safe because neither a
+# URL nor a hex digest ever contains whitespace.
+FLAT="$(tr -d ' \n\t' < "$WORK/latest.json")"
+
+VERSION="$(printf '%s' "$FLAT" | sed -n 's/.*"version":"\([^"]*\)".*/\1/p')"
+[ -n "$VERSION" ] || { echo "install.sh: could not read a version from latest.json" >&2; exit 1; }
+
+URL="$(printf '%s' "$FLAT" | sed -n "s/.*\"$KEY\":{\"url\":\"\\([^\"]*\\)\".*/\\1/p")"
 [ -n "$URL" ] || { echo "install.sh: latest.json has no release asset for $KEY" >&2; exit 1; }
 FILE="$(basename "$URL")"
 RELEASE_URL="$(dirname "$URL")"
