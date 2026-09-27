@@ -79,7 +79,58 @@ chmod +x "$WORK/afk-bin"
 mv "$WORK/afk-bin" "$DEST_DIR/afk"
 
 echo "afk $VERSION installed to $DEST_DIR/afk"
+
+# A curl | sh child can't change its parent shell's PATH, so once $DEST_DIR
+# is missing from PATH there are two separate jobs: make future terminals
+# pick it up (editing the shell's startup file), and tell the user the one
+# line that fixes the *current* terminal, which never rereads that file.
 case ":$PATH:" in
-  *":$DEST_DIR:"*) ;;
-  *) echo "$DEST_DIR is not on your PATH. Add it to your shell profile: export PATH=\"\$HOME/.local/bin:\$PATH\"" ;;
+  *":$DEST_DIR:"*) exit 0 ;;
 esac
+
+MARKER="# afk: add install dir to PATH"
+shell_name="$(basename "${SHELL:-}")"
+
+case "$shell_name" in
+  zsh) RC="$HOME/.zshrc"; FISH=0 ;;
+  bash)
+    # macOS's Terminal.app runs login shells, which read .bash_profile, not
+    # .bashrc -- but only bother if the user already has one to keep reading.
+    if [ "$OS" = darwin ] && [ -f "$HOME/.bash_profile" ]; then
+      RC="$HOME/.bash_profile"
+    else
+      RC="$HOME/.bashrc"
+    fi
+    FISH=0
+    ;;
+  fish) RC="$HOME/.config/fish/conf.d/afk.fish"; FISH=1 ;;
+  *) RC=""; FISH=0 ;;
+esac
+
+if [ "$FISH" -eq 1 ]; then
+  HINT="fish_add_path $DEST_DIR"
+else
+  HINT="export PATH=\"$DEST_DIR:\$PATH\""
+fi
+
+if [ -n "${AFK_NO_MODIFY_PATH:-}" ]; then
+  echo "AFK_NO_MODIFY_PATH set: not editing a startup file."
+elif [ -z "$RC" ]; then
+  echo "install.sh: unrecognized \$SHELL ($shell_name), not editing a startup file."
+elif [ -f "$RC" ] && grep -qF "$MARKER" "$RC" 2>/dev/null; then
+  : # already added by a previous run
+else
+  mkdir -p "$(dirname "$RC")"
+  {
+    printf '\n%s\n' "$MARKER"
+    if [ "$FISH" -eq 1 ]; then
+      printf 'fish_add_path %s\n' "$DEST_DIR"
+    else
+      printf 'export PATH="%s:$PATH"\n' "$DEST_DIR"
+    fi
+  } >> "$RC"
+  echo "afk: added $DEST_DIR to PATH in $RC"
+fi
+
+echo "Run this now to use afk in the current terminal:"
+echo "  $HINT"
