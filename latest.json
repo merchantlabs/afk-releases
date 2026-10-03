@@ -1,25 +1,25 @@
 {
-  "version": "0.3.3",
+  "version": "0.3.12",
   "assets": {
     "darwin-amd64": {
-      "url": "https://github.com/merchantlabs/afk-releases/releases/download/v0.3.3/afk-darwin-amd64.gz",
-      "sha256": "15eb0685e7e976ced31d1b33e797041903b3311cdecab07e9c5be3ed533320a2"
+      "url": "https://github.com/merchantlabs/afk-releases/releases/download/v0.3.12/afk-darwin-amd64.gz",
+      "sha256": "6f5449c444a53a964f1a81a357603883eb9b3f46330fbe338ad52309229fad11"
     },
     "darwin-arm64": {
-      "url": "https://github.com/merchantlabs/afk-releases/releases/download/v0.3.3/afk-darwin-arm64.gz",
-      "sha256": "3d551e5ad2603a6e3bf0687b333411b92c663bfca34697c59ba2efbd1bb554f7"
+      "url": "https://github.com/merchantlabs/afk-releases/releases/download/v0.3.12/afk-darwin-arm64.gz",
+      "sha256": "34595f585cd91dc6f83db50603f786996e404a09304bea06ef7137b009ed7844"
     },
     "linux-amd64": {
-      "url": "https://github.com/merchantlabs/afk-releases/releases/download/v0.3.3/afk-linux-amd64.gz",
-      "sha256": "e9d733847490079e04b241480492aa56ec6da7d80cebc008a225dfa2deb16ea3"
+      "url": "https://github.com/merchantlabs/afk-releases/releases/download/v0.3.12/afk-linux-amd64.gz",
+      "sha256": "07e3506f88246f4cb356e20a407ad58b263a26049153c23c1dd5976a09448b7a"
     },
     "linux-arm64": {
-      "url": "https://github.com/merchantlabs/afk-releases/releases/download/v0.3.3/afk-linux-arm64.gz",
-      "sha256": "5347dca678433e5067c9c581e92726f0f0b584304a370da8aaa522bfcd000a60"
+      "url": "https://github.com/merchantlabs/afk-releases/releases/download/v0.3.12/afk-linux-arm64.gz",
+      "sha256": "05eaabdb7a9b9ad507f770ed8aa66b720e78bbd21e239ef1f952393743fdc605"
     },
     "windows-amd64": {
-      "url": "https://github.com/merchantlabs/afk-releases/releases/download/v0.3.3/afk-windows-amd64.exe.gz",
-      "sha256": "e30ffd4ffa4493f16267ec39813458138c17fb8f3e7d5ac76d9a6ffde8ccf1eb"
+      "url": "https://github.com/merchantlabs/afk-releases/releases/download/v0.3.12/afk-windows-amd64.exe.gz",
+      "sha256": "11cfa0a9a2783a1fd1b21ffcaf7f4358fc878c3ac593d73fe051dfecc91356f4"
     }
   }
 }
