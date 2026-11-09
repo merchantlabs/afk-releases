@@ -84,8 +84,9 @@ echo "afk $VERSION installed to $DEST_DIR/afk"
 # is missing from PATH there are two separate jobs: make future terminals
 # pick it up (editing the shell's startup file), and tell the user the one
 # line that fixes the *current* terminal, which never rereads that file.
+ON_PATH=0
 case ":$PATH:" in
-  *":$DEST_DIR:"*) exit 0 ;;
+  *":$DEST_DIR:"*) ON_PATH=1 ;;
 esac
 
 MARKER="# afk: add install dir to PATH"
@@ -107,30 +108,46 @@ case "$shell_name" in
   *) RC=""; FISH=0 ;;
 esac
 
-if [ "$FISH" -eq 1 ]; then
-  HINT="fish_add_path $DEST_DIR"
-else
-  HINT="export PATH=\"$DEST_DIR:\$PATH\""
+if [ "$ON_PATH" -eq 0 ]; then
+  if [ "$FISH" -eq 1 ]; then
+    HINT="fish_add_path $DEST_DIR"
+  else
+    HINT="export PATH=\"$DEST_DIR:\$PATH\""
+  fi
+
+  if [ -n "${AFK_NO_MODIFY_PATH:-}" ]; then
+    echo "AFK_NO_MODIFY_PATH set: not editing a startup file."
+  elif [ -z "$RC" ]; then
+    echo "install.sh: unrecognized \$SHELL ($shell_name), not editing a startup file."
+  elif [ -f "$RC" ] && grep -qF "$MARKER" "$RC" 2>/dev/null; then
+    : # already added by a previous run
+  else
+    mkdir -p "$(dirname "$RC")"
+    {
+      printf '\n%s\n' "$MARKER"
+      if [ "$FISH" -eq 1 ]; then
+        printf 'fish_add_path %s\n' "$DEST_DIR"
+      else
+        printf 'export PATH="%s:$PATH"\n' "$DEST_DIR"
+      fi
+    } >> "$RC"
+    echo "afk: added $DEST_DIR to PATH in $RC"
+  fi
+  echo "Run this now to use afk in the current terminal:"
+  echo "  $HINT"
 fi
 
-if [ -n "${AFK_NO_MODIFY_PATH:-}" ]; then
-  echo "AFK_NO_MODIFY_PATH set: not editing a startup file."
-elif [ -z "$RC" ]; then
-  echo "install.sh: unrecognized \$SHELL ($shell_name), not editing a startup file."
-elif [ -f "$RC" ] && grep -qF "$MARKER" "$RC" 2>/dev/null; then
-  : # already added by a previous run
-else
-  mkdir -p "$(dirname "$RC")"
-  {
-    printf '\n%s\n' "$MARKER"
-    if [ "$FISH" -eq 1 ]; then
-      printf 'fish_add_path %s\n' "$DEST_DIR"
-    else
-      printf 'export PATH="%s:$PATH"\n' "$DEST_DIR"
-    fi
-  } >> "$RC"
-  echo "afk: added $DEST_DIR to PATH in $RC"
+# The rest of setup (harness plugins, tailnet entry, doctor) is the CLI's job.
+# Chain into it only when someone can answer its prompts: under `curl | sh`
+# stdin is the script, so read from the terminal instead. AFK_INSTALL_TTY
+# exists so tests can stand in for /dev/tty; nothing else should set it.
+TTY_DEV="${AFK_INSTALL_TTY:-/dev/tty}"
+if [ -z "${AFK_NO_SETUP:-}" ] && ( : < "$TTY_DEV" ) 2>/dev/null; then
+  echo "afk: running afk install"
+  # Full path: this shell's PATH does not include $DEST_DIR yet. Not exec:
+  # that would skip the EXIT trap that removes $WORK.
+  rc=0
+  "$DEST_DIR/afk" install < "$TTY_DEV" || rc=$?
+  exit "$rc"
 fi
-
-echo "Run this now to use afk in the current terminal:"
-echo "  $HINT"
+echo "Then run: afk install"
