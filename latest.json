@@ -1,25 +1,25 @@
 {
-  "version": "0.3.196",
+  "version": "0.3.198",
   "assets": {
     "darwin-amd64": {
-      "url": "https://github.com/merchantlabs/afk-releases/releases/download/v0.3.196/afk-darwin-amd64.gz",
-      "sha256": "033dfb137bcc20b0b0f25523c18fff8ae4ed5ab4f56358f10dd67f5a73e8db8a"
+      "url": "https://github.com/merchantlabs/afk-releases/releases/download/v0.3.198/afk-darwin-amd64.gz",
+      "sha256": "33863f0013d07d80862956c56cbfa26b031390ee54192c58f7849e7a798db9ee"
     },
     "darwin-arm64": {
-      "url": "https://github.com/merchantlabs/afk-releases/releases/download/v0.3.196/afk-darwin-arm64.gz",
-      "sha256": "acb84f8393d4d46704954f215b6eb55a0a93c41d80932d7be71888b5dc9ad3fb"
+      "url": "https://github.com/merchantlabs/afk-releases/releases/download/v0.3.198/afk-darwin-arm64.gz",
+      "sha256": "329a7e8e7fbefcdabb574468046204887cce76bd5b0f391fd7124e97c43a8ccb"
     },
     "linux-amd64": {
-      "url": "https://github.com/merchantlabs/afk-releases/releases/download/v0.3.196/afk-linux-amd64.gz",
-      "sha256": "9a331661b5c79c1ac99fe7c7d15691fac1341e4bd12e1cca2f0cfd89e0753b92"
+      "url": "https://github.com/merchantlabs/afk-releases/releases/download/v0.3.198/afk-linux-amd64.gz",
+      "sha256": "427a8db301b464c5a054b9d1cd2c27e0d8b180e1a13c08fd82a2b29cf0a545a6"
     },
     "linux-arm64": {
-      "url": "https://github.com/merchantlabs/afk-releases/releases/download/v0.3.196/afk-linux-arm64.gz",
-      "sha256": "aa812b8da7ef6013d2d9799c35ea484f245b96540d66055127c77a2787bd18e6"
+      "url": "https://github.com/merchantlabs/afk-releases/releases/download/v0.3.198/afk-linux-arm64.gz",
+      "sha256": "f6301af5ceea90bdca781d406ff566acd68913192070ed14cae63cfe896f746a"
     },
     "windows-amd64": {
-      "url": "https://github.com/merchantlabs/afk-releases/releases/download/v0.3.196/afk-windows-amd64.exe.gz",
-      "sha256": "354c2dbbd644d1a0c2a0790466d2e5b564716bf9acfde28204e7016a6d2f9830"
+      "url": "https://github.com/merchantlabs/afk-releases/releases/download/v0.3.198/afk-windows-amd64.exe.gz",
+      "sha256": "f3f94cf32a71a439bdb400a6a2942985c52d5cb00fd2ffec1a3dd0da156e6cec"
     }
   }
 }
